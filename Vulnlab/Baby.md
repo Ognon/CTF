@@ -21,10 +21,13 @@ Service Info: Host: BABYDC; OS: Windows; CPE: cpe:/o:microsoft:windows
 ```
 
 On tente de voir si on peut se connecter 
+
 ![test](Images/20241213023917.png)
+
 On a une connexion valide sans identifiant.
 On tente d'énumerer les users ou les shares avec --users pui --shares mais sans succès :
-![[Pasted image 20241213024456.png]]
+
+![][20241213024456.png]
 
 Par contre avec ldap on obtient un retour pertinent :
 
