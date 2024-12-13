@@ -76,7 +76,7 @@ Access was verified, and user privileges were checked using Netexec and the whoa
 ```
 nxc winrm 10.10.126.10 -u caroline.robinson -p "Password123" -X "whoami /priv" 
 ```
-![i](Images/20241213061303.png)
+![i](Images/2024121306130.png)
 
 The SeBackupPrivilege was identified, enabling access to sensitive files.
 A shadow copy was created using Diskshadow, and the NTDS.dit and SYSTEM hive were extracted:
