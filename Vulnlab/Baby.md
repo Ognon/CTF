@@ -51,6 +51,7 @@ A connection test revealed a valid connection via SMB without authentication but
 ![i](Images/20241213024456.png)
 
 Anonymous LDAP bind returned useful information about domain users:
+
 ![i](Images/20241213024523.png)
 
 LDAP Enumeration
