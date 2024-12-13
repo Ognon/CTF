@@ -57,9 +57,9 @@ Anonymous LDAP bind returned useful information about domain users:
 LDAP Enumeration
 
 Using the get-desc-users module in Netexec, further details about user accounts were retrieved:
-
+```
 nxc ldap 10.10.126.10 -u "" -p "" -M get-desc-users  
-
+```
 ![i](Images/20241213024833.png)
 
 4.3 Password Change and Privilege Verification
@@ -69,8 +69,9 @@ An error message revealed that Caroline.Robinson had a valid account but require
 ![i](Images/20241213031525.png)
  
 The password was reset to Password123 using:
+```
 smbpasswd -r 10.10.126.10 -U caroline.robinson 
-
+```
 Access was verified, and user privileges were checked using Netexec and the whoami /priv command:
 
 nxc winrm 10.10.126.10 -u caroline.robinson -p "Password123" -X "whoami /priv" 
