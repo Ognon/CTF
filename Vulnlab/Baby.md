@@ -66,6 +66,7 @@ nxc ldap 10.10.126.10 -u "" -p "" -M get-desc-users
 
 An error message revealed that Caroline.Robinson had a valid account but required a password reset. 
 
+![i](Images/20241213031525.png)
  
 The password was reset to Password123 using:
 smbpasswd -r 10.10.126.10 -U caroline.robinson 
