@@ -17,7 +17,6 @@ Summary of Attacks
     Password Change: Identified a valid user and changed their password to gain access.
     Privilege Escalation: Leveraged the SeBackupPrivilege to extract sensitive data (NTDS.dit and SYSTEM hive).
     Hash Dumping and Admin Access: Extracted NTLM hashes to gain administrative access and retrieve the final flag.
-    Nmap de la box :
 
 Enumeration
 
