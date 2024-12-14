@@ -1,4 +1,4 @@
-This document provides a step-by-step walkthrough of an Active Directory penetration test on the target machine (BABYDC). The purpose was to enumerate and exploit weaknesses in the environment to gain administrative access.
+This writeup provides a detailed analysis of the Active Directory exploit on the "Baby" box, a CTF on the Vulnlab platform, aiming to enumerate and exploit vulnerabilities to gain administrative access.
 
 Tools Used
 
