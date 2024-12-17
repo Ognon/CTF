@@ -1,8 +1,8 @@
-**Baby**
+# Baby
 
 This writeup provides a detailed analysis of the Active Directory exploit on the "Baby" box, a CTF on the Vulnlab platform, aiming to enumerate and exploit vulnerabilities to gain administrative access.
 
-Tools Used
+# Tools Used
 
     Nmap: Network scanning and enumeration
     Netexec (nxc): LDAP and SMB enumeration
@@ -12,7 +12,7 @@ Tools Used
     Robocopy: File transfer within Windows
     Secretsdump.py: Hash extraction from NTDS.dit
     
-Summary of Attacks
+# Summary of Attacks
 
     Network Enumeration: Identified open ports and services running on the target.
     LDAP Enumeration: Retrieved sensitive user information via anonymous bind.
@@ -20,7 +20,7 @@ Summary of Attacks
     Privilege Escalation: Leveraged the SeBackupPrivilege to extract sensitive data (NTDS.dit and SYSTEM hive).
     Hash Dumping and Admin Access: Extracted NTLM hashes to gain administrative access and retrieve the final flag.
 
-Enumeration
+# Enumeration
 
 Using Nmap, open ports and services were identified:
 
@@ -63,7 +63,7 @@ nxc ldap 10.10.126.10 -u "" -p "" -M get-desc-users
 ```
 ![i](Images/20241213024833.png)
 
-4.3 Password Change and Privilege Verification
+# Password Change and Privilege Verification
 
 An error message revealed that Caroline.Robinson had a valid account but required a password reset. 
 
@@ -117,7 +117,7 @@ download ntds.dit
 download system
 ```
 
-Hash Extraction and Privilege Escalation
+# Hash Extraction and Privilege Escalation
 
 The Secretsdump tool was used to extract NTLM hashes:
 ```
