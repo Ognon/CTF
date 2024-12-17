@@ -2,7 +2,7 @@
 
 This writeup provides a detailed analysis of the Active Directory exploit on the "Baby" box, a CTF on the Vulnlab platform, aiming to enumerate and exploit vulnerabilities to gain administrative access.
 
-# Tools Used
+# Tools Used
 
     Nmap: Network scanning and enumeration
     Netexec (nxc): LDAP and SMB enumeration
