@@ -2,7 +2,7 @@
 
 This document presents a comprehensive writeup of the "Data" box from the Vulnlab platform. The challenge involves exploiting a vulnerable Grafana instance and escalating privileges to obtain root access.
 
-# Reconnaissance
+## Reconnaissance
 
 Initial port scanning with Nmap revealed two open ports:
 
@@ -14,7 +14,7 @@ PORT     STATE SERVICE VERSION
 
 Further investigation of port 3000 uncovered a web application running Grafana 8.0.0, which is vulnerable to CVE-2021-43798, an unauthorized arbitrary file reading vulnerability.
 
-# Initial Access
+## Initial Access
 
 The vulnerability was confirmed using Burp Suite: 
 
@@ -40,7 +40,7 @@ This successfully cracked the password for the user "boris". Using the cracked c
 
 ![SSH Connection](Images/20241217115336.png)
 
-# Privilege Escalation
+## Privilege Escalation
 Initial enumeration with sudo -l revealed:
 
 ```
