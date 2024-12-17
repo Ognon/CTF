@@ -40,7 +40,7 @@ This successfully cracked the password for the user "boris". Using the cracked c
 
 ![SSH Connection](Images/20241217115336.png)
 
-4. Privilege Escalation
+# Privilege Escalation
 Initial enumeration with sudo -l revealed:
 
 ```
