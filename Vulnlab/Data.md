@@ -1,6 +1,6 @@
 # Data
 
-This document presents a comprehensive writeup of the "Data" box from the Vulnlab platform. The challenge involves exploiting a vulnerable Grafana instance and escalating privileges to obtain root access.
+The challenge involves exploiting a vulnerable Grafana instance and escalating privileges to obtain root access.
 
 ## Reconnaissance
 
