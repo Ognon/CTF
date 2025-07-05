@@ -3,8 +3,8 @@
 Summary
 This challenge involved uncovering sensitive information via a misconfigured robots.txt, cracking a hashed password, and exploiting a Local File Inclusion (LFI) vulnerability to retrieve the flag.
 
-Details
 Initial Discovery
+
 Checking the /robots.txt file revealed a hidden directory:
 
 ![test](Images/20241116210409.png)
@@ -26,7 +26,6 @@ Using the recovered credentials, we logged in and gained access to a page with a
 
 ![test](Images/20241116211115.png)
 
-Local File Inclusion (LFI) Exploitation
 Intercepting the download request with a proxy revealed that the file path was vulnerable to LFI:
 
 ![test](Images/20241116211412.png)
@@ -40,7 +39,6 @@ Adjusting the file path to include the base directory /assets/images bypassed th
 
 ![test](Images/20241116211559.png)
 
-Flag Retrieval
 Inspecting the source code of the current page revealed the flag:
 
 ![test](Images/20241116211740.png)
