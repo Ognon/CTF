@@ -1,10 +1,12 @@
 **Web - Cat Club**
 
 Summary
+
 A .zip file with the website's source code was provided. Looking through it, we found vulnerabilities that allowed SSTI exploitation and flag retrieval.
 
 
 Initial Discovery
+
 The site has a login page and a gallery showing cat images. The username is reflected on the gallery page, which pointed to a possible SSTI:
 
 ![test](Images/20241116214032.png)
