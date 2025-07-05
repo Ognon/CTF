@@ -1,52 +1,56 @@
 **Web - Fruitables**
 
 Summary
-This challenge did not provide source code, requiring manual reconnaissance and testing. By identifying key endpoints, exploiting an SQL injection (SQLi) vulnerability, and bypassing file upload restrictions, we achieved remote code execution (RCE) and retrieved the flag.
+This challenge didn’t include source code, so everything had to be done manually. We found key endpoints, exploited an SQL injection, bypassed file upload restrictions, got RCE, and retrieved the flag.
 
-Details
+
 Initial Reconnaissance
-With no source code available, directory enumeration using gobuster identified interesting endpoints:
+Without source code, we used gobuster for directory enumeration and found useful endpoints:
 
 ![test](Images/20241116220024.png)
 
-Two key findings emerged:
+Two important ones:
 
-/upload: Likely used for file uploads.
-/account.php: A login page, but registration was disabled, and no credentials were available.
+    /upload: Likely for file uploads.
+
+    /account.php: A login page. Registration was disabled, and no credentials were available.
+    
 SQL Injection
-Testing the username field with a single quote (') revealed a potential SQL injection:
+Testing the username field with a single quote (') showed a possible SQL injection:
 
 ![test](Images/20241116220206.png)
 
-Manual exploitation attempts were unsuccessful, so we utilized sqlmap for automated exploitation:
+Manual exploitation didn’t work, so we used sqlmap to automate it:
 
 ![test](Images/20241116220335.png)
 
 
 ![test](Images/20241116220349.png)
 
-By cracking the administrator's password, we gained access to the dashboard, which included a file upload feature.
-
+We cracked the admin password and logged in. The dashboard had a file upload option:
 
 ![test](Images/20241116220430.png) 
 
 File Upload Bypass
-Initial attempts to upload a web shell were blocked:
+First attempts to upload a web shell were blocked:
 
 ![test](Images/20241116220720.png)
 
-Changed the file extension to .jpg.
-Added a valid JPEG signature to the file header.
-Adjusted the Content-Type to image/jpeg.
-The modified file was successfully uploaded:
+To bypass the filter, we:
+
+    Renamed the file with a .jpg extension
+
+    Added a valid JPEG header
+
+    Set Content-Type to image/jpeg
+
+The file upload worked:
 
 ![test](Images/20241116221201.png)
 
 
-
 ![test](Images/20241116221318.png) 
 
-Remote Code Execution and Flag Retrieval
-By accessing the uploaded web shell, we executed commands on the server and retrieved the flag:
+We accessed the uploaded shell, ran commands on the server, and got the flag:
 
 ![test](Images/20241116221410.png)
